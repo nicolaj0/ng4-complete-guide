@@ -1,19 +1,25 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Recipe} from '../recipe.model';
 import {RecipeService} from '../recipe.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {Observer} from "rxjs/Observer";
+import {Subscription} from "rxjs/Subscription";
+import {UserService} from "../userv.service";
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent implements OnInit, OnDestroy {
+  ngOnDestroy(): void {
+    this.customSubr.unsubscribe();
+  }
+  customSubr: Subscription;
 
   recipes: Recipe[];
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService, private usersev: UserService) { }
 
   ngOnInit() {
     this.recipes = this.recipeService.getRecipes();
@@ -27,9 +33,10 @@ export class RecipeListComponent implements OnInit {
       setTimeout(() => {
         obs.complete();
       },5000);
+
       }
     );
-    myObs.subscribe(
+    this.customSubr = myObs.subscribe(
       (data: string ) => {console.log(data); },
       (err: string ) => {console.log(err); },
       () => {console.log('complete');}
@@ -37,5 +44,7 @@ export class RecipeListComponent implements OnInit {
   }
 
 
-
+  onActivate() {
+    this.usersev.userActivated.next();
+  }
 }
