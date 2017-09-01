@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-xs-12">
+    <img src="" alt="" class="img-responsive">
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h4>aaa{{recipe.name}}</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+      <ul >
+        <li  >
+          <a  >Manage <span class="caret"></span></a>
+          <ul >
+            <li><a (click)="addToSl()">To Shop List</a></li>
+            <li><a [routerLink]="['edit']">Edit Recie</a></li>
+            <li><a >Delete</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col-xs-12">
+    {{recipe.description}}
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="list-group">
+      <li class="list-group-item"
+          *ngFor="let ingredient of recipe.ingredients">
+        {{ingredient.name}}-{{ingredient.amount}}
+      </li>
+    </ul>
+  </div>
+</div>
