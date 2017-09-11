@@ -26,4 +26,9 @@ export class ShoppingListService {
     this.ingredients.push(ingredient);
     this.ingredientChanged.emit(this.ingredients.slice());
   }
+
+  deleteIngredient(editedItem: number) {
+    this.ingredients.splice(editedItem, 1);
+    this.ingredientChanged.emit(this.ingredients.slice());
+  }
 }
