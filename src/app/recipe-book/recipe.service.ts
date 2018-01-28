@@ -8,7 +8,7 @@ export class RecipeService {
   recipeSelected = new EventEmitter<Recipe>();
   private recipes: Recipe[] = [
     new Recipe(
-      'test 1',
+      'zzzz',
       'simpleTest',
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-IwLofXc73w0I04dK0WzEQQVEYSSI2yIrOpdnjVcmvA9DrSMz',
       [
@@ -16,13 +16,14 @@ export class RecipeService {
         new Ingredient('fire', 20)
       ]),
     new Recipe(
-      'test 2',
+      'aaaa',
       'simpleTest', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-IwLofXc73w0I04dK0WzEQQVEYSSI2yIrOpdnjVcmvA9DrSMz',
       [
         new Ingredient('Buns', 1)
       ])
   ];
   getRecipes() {
+    console.log(this.recipes.slice());
     return this.recipes.slice();
   }
 
@@ -42,6 +43,12 @@ export class RecipeService {
 
   deleteRecipe(id: number) {
     this.recipes.splice(id, 1);
+    this.recipesChanged.next(this.recipes.slice());
+
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
     this.recipesChanged.next(this.recipes.slice());
 
   }
